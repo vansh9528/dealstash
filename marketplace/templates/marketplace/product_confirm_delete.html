@@ -1,0 +1,18 @@
+{% extends "marketplace/base.html" %}
+{% block title %}Delete product — Confirm{% endblock %}
+
+{% block content %}
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="mb-3">Delete product</h4>
+      <p>Are you sure you want to permanently delete the product: <strong>{{ product.name }}</strong> ?</p>
+      <p class="text-muted">This action cannot be undone.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete product</button>
+        <a class="btn btn-secondary ms-2" href="{% url 'seller_dashboard' %}">Cancel</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

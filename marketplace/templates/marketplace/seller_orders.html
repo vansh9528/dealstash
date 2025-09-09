@@ -1,0 +1,50 @@
+{% extends "marketplace/base.html" %}
+{% block title %}My Orders — DealStash{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4 mb-0">Orders for {{ request.user.company.name }}</h1>
+    <div>
+      <a class="btn btn-outline-secondary" href="{% url 'seller_dashboard' %}">Back to Dashboard</a>
+    </div>
+  </div>
+
+  {% if orders %}
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Buyer</th>
+            <th>Email</th>
+            <th>Qty</th>
+            <th>Status</th>
+            <th>Placed</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in orders %}
+            <tr>
+              <td>{{ o.pk }}</td>
+              <td><a href="{% url 'product_detail' o.product.pk %}">{{ o.product.name }}</a></td>
+              <td>{{ o.buyer_name }}</td>
+              <td>{{ o.buyer_email }}</td>
+              <td>{{ o.quantity }}</td>
+              <td>{{ o.get_status_display }}</td>
+              <td>{{ o.created_at|date:"M d, Y H:i" }}</td>
+              <td>
+                {% if user.is_staff %}
+                  <a class="btn btn-sm btn-outline-secondary" href="/admin/marketplace/order/{{ o.pk }}/change/">Admin</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No orders for your products yet.</div>
+  {% endif %}
+{% endblock %}

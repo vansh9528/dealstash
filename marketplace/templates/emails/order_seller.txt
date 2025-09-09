@@ -1,0 +1,16 @@
+Hello {{ company.name }},
+
+You have received a new order on DealStash.
+
+Product: {{ product.name }}
+Quantity: {{ order.quantity }}
+Buyer: {{ order.buyer_name }}
+Buyer email: {{ order.buyer_email }}
+
+Please contact the buyer to complete the sale.
+
+Order ID: {{ order.pk }}
+Placed at: {{ order.created_at }}
+
+Thanks,
+DealStash

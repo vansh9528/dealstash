@@ -1,0 +1,16 @@
+/* Basic site tweaks */
+body { font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif; background: #f6f7fb; color:#212529; }
+.container { max-width:1100px; }
+.product-image { border-top-left-radius:6px; border-top-right-radius:6px; }
+.placeholder-image { height:170px; background:#eef2f7; color:#9aa5b1; }
+
+/* truncate long titles */
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* card hover */
+.card:hover { transform: translateY(-3px); transition: all .18s ease; }
+
+/* small responsive tweaks */
+@media (max-width:576px) {
+  .product-image { height:140px !important; object-fit:cover; }
+}

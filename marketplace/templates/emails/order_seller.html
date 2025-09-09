@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>New order for {{ product.name }}</title></head>
+  <body>
+    <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+      <h2>New order received</h2>
+      <p>Hello <strong>{{ company.name }}</strong>,</p>
+      <p>You have received a new order on <strong>DealStash</strong>:</p>
+      <ul>
+        <li>Product: {{ product.name }}</li>
+        <li>Quantity: {{ order.quantity }}</li>
+        <li>Buyer: {{ order.buyer_name }}</li>
+        <li>Buyer email: {{ order.buyer_email }}</li>
+      </ul>
+      <p>Order ID: {{ order.pk }} — Placed at: {{ order.created_at }}</p>
+      <p>Thanks,<br/>DealStash</p>
+    </div>
+  </body>
+</html>

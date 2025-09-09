@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}DealStash{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'product_list' %}">DealStash</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Home</a></li>
+
+          {% if user.is_authenticated %}
+            <li class="nav-item me-2">
+              <span class="nav-link">Hello, <strong>{{ user.username }}</strong></span>
+            </li>
+
+            {% if user.company %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'seller_dashboard' %}">Dashboard</a></li>
+            {% endif %}
+
+            {% if user.is_staff %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+            {% endif %}
+
+            <!-- Logout with POST -->
+            <li class="nav-item">
+              <form id="logout-form" method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="nav-link btn btn-link" style="padding:0; border:none;">Logout</button>
+              </form>
+            </li>
+
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'seller_signup' %}">Sign Up</a></li>
+          {% endif %}
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content container -->
+  <div class="container mt-4">
+    <!-- Django messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3 mt-5">
+    <small>&copy; 2025 DealStash. All rights reserved.</small>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

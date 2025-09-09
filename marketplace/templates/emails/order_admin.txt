@@ -1,0 +1,10 @@
+A new order was placed on DealStash.
+
+Product: {{ product.name }} (ID: {{ product.pk }})
+Company: {{ company.name }}
+Buyer: {{ order.buyer_name }} <{{ order.buyer_email }}>
+Quantity: {{ order.quantity }}
+Order ID: {{ order.pk }}
+Placed at: {{ order.created_at }}
+
+Admin: view in admin: {{ admin_url }}
