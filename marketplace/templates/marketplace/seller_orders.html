@@ -20,6 +20,11 @@
             <th>Email</th>
             <th>Qty</th>
             <th>Status</th>
+            <th>Total Price</th>
+            {% if user.is_superuser or user.is_staff %}
+              <th>Commission</th>
+              <th>Seller Earnings</th>
+            {% endif %}
             <th>Placed</th>
             <th>Actions</th>
           </tr>
@@ -33,10 +38,16 @@
               <td>{{ o.buyer_email }}</td>
               <td>{{ o.quantity }}</td>
               <td>{{ o.get_status_display }}</td>
+              <td>₹{{ o.total_price }}</td>
+              {% if user.is_superuser or user.is_staff %}
+                <td>₹{{ o.commission }}</td>
+                <td>₹{{ o.seller_earnings }}</td>
+              {% endif %}
               <td>{{ o.created_at|date:"M d, Y H:i" }}</td>
               <td>
                 {% if user.is_staff %}
-                  <a class="btn btn-sm btn-outline-secondary" href="/admin/marketplace/order/{{ o.pk }}/change/">Admin</a>
+                  <a class="btn btn-sm btn-outline-secondary"
+                     href="/admin/marketplace/order/{{ o.pk }}/change/">Admin</a>
                 {% endif %}
               </td>
             </tr>

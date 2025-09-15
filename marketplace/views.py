@@ -229,3 +229,47 @@ def company_delete_confirm_staff(request, pk):
         return redirect("product_list")
 
     return render(request, "marketplace/company_confirm_delete.html", {"company": company})
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+# make sure these imports exist in the file
+from .models import Product, Order
+from .forms import OrderForm
+
+
+@login_required
+def order_create(request, pk):
+    """Buyer places an order for a product"""
+    product = get_object_or_404(Product, pk=pk)
+
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.product = product
+            order.save()  # commission + totals auto-calculated in Order.save()
+
+            # build the message visible to all users (always includes total)
+            total_str = format(order.total_price, ".2f")
+            base_msg = f"Order placed successfully! Total: ₹{total_str}."
+
+            # only add commission/earnings info for staff/superusers
+            if request.user.is_staff or request.user.is_superuser:
+                commission_str = format(order.commission, ".2f")
+                earnings_str = format(order.seller_earnings(), ".2f")
+                base_msg = (
+                    f"Order placed successfully! Total: ₹{total_str}, "
+                    f"Our cut: ₹{commission_str}, Seller earnings: ₹{earnings_str}."
+                )
+
+            messages.success(request, base_msg)
+
+            return redirect("product_detail", pk=product.pk)
+    else:
+        form = OrderForm()
+
+    return render(request, "marketplace/order_form.html", {"form": form, "product": product})
+

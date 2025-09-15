@@ -116,3 +116,12 @@ DEFAULT_FROM_EMAIL = 'noreply@dealstash.com'
 ADMINS = [
     ("Site Admin", "vansh.choudhary238@gmail.com"),  # replace with your real email
 ]
+
+
+# Commission cut for platform (10%)
+COMMISSION_RATE = 0.10
+
+
+from decimal import Decimal
+
+COMMISSION_RATE = Decimal("0.10")  # 10%
