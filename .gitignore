@@ -1,6 +1,28 @@
-db.sqlite3
-__pycache__
+# Python/Django
 *.pyc
-.venv/
+__pycache__/
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+
+# Django
+db.sqlite3
 media/
 staticfiles/
+*.log
+
+# Virtualenvs
+.venv/
+env/
+venv/
+
+# Environment files
+.env
+.env.local
+
+# IDEs / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
